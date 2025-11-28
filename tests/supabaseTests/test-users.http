@@ -1,0 +1,26 @@
+// This is a testing script - need to install REST Client VS Code extension.
+// Once installed "Send Request" buttons appear, press while server is running to see output.
+
+### GET all users
+GET http://localhost:3000/users
+
+### POST new user
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "email": "john@example.com"
+}
+
+### PUT update existing user
+PUT http://localhost:3000/users/1
+Content-Type: application/json
+
+{
+  "name": "John Updated",
+  "email": "john.updated@example.com"
+}
+
+### DELETE delete existing user
+DELETE http://localhost:3000/users/1
