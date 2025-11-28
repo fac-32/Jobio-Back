@@ -8,7 +8,8 @@
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "dev": "nodemon --exec nodemon --watch . --ext ts,json --exec node --loader ts-node/esm server.ts"
+        "dev": "nodemon --exec nodemon --watch . --ext ts,json --exec node --loader ts-node/esm server.ts",
+        "format": "prettier -wc ."
     },
     "dependencies": {
         "express": "^5.1.0"
