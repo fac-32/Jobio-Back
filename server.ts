@@ -62,6 +62,9 @@ app.delete('/users/:id', async (req, res) => {
 });
 
 
+// Authentication
+
+
 const port = 3000;
 app.listen(port, () => {
     console.log(`Server listening on ${port}`);

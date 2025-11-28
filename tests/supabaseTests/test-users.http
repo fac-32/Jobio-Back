@@ -1,3 +1,6 @@
+// This is a testing script - need to install REST Client VS Code extension.
+// Once installed "Send Request" buttons appear, press while server is running to see output.
+
 ### GET all users
 GET http://localhost:3000/users
 
