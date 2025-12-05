@@ -7,7 +7,7 @@
     "type": "module",
     "main": "index.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
+        "test": "vitest",
         "dev": "nodemon --exec nodemon --watch . --ext ts,json --exec node --loader ts-node/esm server.ts",
         "format": "prettier -wc ."
     },
@@ -28,3 +28,4 @@
         "vitest": "^4.0.15"
     }
 }
+
