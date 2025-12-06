@@ -1,4 +1,4 @@
-import express, {  } from 'express';
+import express from 'express';
 import { authRouter } from './auth/authRoutes.js';
 import { usersRouter } from './users/usersRoutes.js';
 import { usersCVsRouter } from './users_cvs/usersCVsRoutes.js';
