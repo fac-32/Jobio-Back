@@ -3,8 +3,19 @@ import { authRouter } from './auth/authRoutes.js';
 import { usersRouter } from './users/usersRoutes.js';
 import { usersCVsRouter } from './users_cvs/usersCVsRoutes.js';
 import { usersDealbreakersRouter } from './users_dealbreakers/userDealbreakersRoutes.js';
+import cors from 'cors';
 
 const app = express();
+
+app.use(
+    cors({
+        origin: 'http://localhost:5173',
+        methods: ['GET', 'POST', 'PUT', 'DELETE'],
+        allowedHeaders: ['Content-Type', 'Authorization'],
+        credentials: true,
+    }),
+);
+
 app.use(express.json());
 
 app.use('/users', usersRouter);
