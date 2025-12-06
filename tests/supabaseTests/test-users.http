@@ -7,10 +7,11 @@ GET http://localhost:3000/users
 ### POST new user
 POST http://localhost:3000/users
 Content-Type: application/json
-
+Authorization: Bearer 
 {
-  "name": "John Doe",
-  "email": "john@example.com"
+  "name": "John Bro",
+  "email": "john@example.com",
+  "auth_id": 203
 }
 
 ### PUT update existing user
@@ -24,3 +25,28 @@ Content-Type: application/json
 
 ### DELETE delete existing user
 DELETE http://localhost:3000/users/1
+
+### 1. REGISTER new user
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+  "name": "Mark",
+  "email": "markomeara98@gmail.com",
+  "password": "MySecurePass123"
+}
+
+### 2. LOGIN user
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "email": "markomeara98@gmail.com",
+  "password": "MySecurePass123"
+}
+
+### 3. GET users
+GET http://localhost:3000/users
+Authorization: Bearer
+
+
