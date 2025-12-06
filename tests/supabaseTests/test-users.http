@@ -7,10 +7,12 @@ GET http://localhost:3000/users
 ### POST new user
 POST http://localhost:3000/users
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsImtpZCI6IkhCSGdkc0kvemFCaEpGMVUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2N3aG92bXVnYm9vd3FxeXFzZm9xLnN1cGFiYXNlLmNvL2F1dGgvdjEiLCJzdWIiOiJmYTQ3NGQyMS1kYWU1LTQ1ODMtYmU5MS1iNDg1MTEwMGZlM2QiLCJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzY1MDI2OTM4LCJpYXQiOjE3NjUwMjMzMzgsImVtYWlsIjoibWFya29tZWFyYTk4QGdtYWlsLmNvbSIsInBob25lIjoiIiwiYXBwX21ldGFkYXRhIjp7InByb3ZpZGVyIjoiZW1haWwiLCJwcm92aWRlcnMiOlsiZW1haWwiXX0sInVzZXJfbWV0YWRhdGEiOnsiZW1haWwiOiJtYXJrb21lYXJhOThAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsInBob25lX3ZlcmlmaWVkIjpmYWxzZSwic3ViIjoiZmE0NzRkMjEtZGFlNS00NTgzLWJlOTEtYjQ4NTExMDBmZTNkIn0sInJvbGUiOiJhdXRoZW50aWNhdGVkIiwiYWFsIjoiYWFsMSIsImFtciI6W3sibWV0aG9kIjoicGFzc3dvcmQiLCJ0aW1lc3RhbXAiOjE3NjUwMjMzMzh9XSwic2Vzc2lvbl9pZCI6IjA5MjU5MTg3LTJkMzUtNGNjZC1iNGZkLThjMDY1ODdiMjU1MSIsImlzX2Fub255bW91cyI6ZmFsc2V9.YrgcMR0IAQ-aB3bIi4SPwaze7rQ6OQpRiZhIbLGOdvA
 
 {
-  "name": "John Doe",
-  "email": "john@example.com"
+  "name": "John Bro",
+  "email": "john@example.com",
+  "auth_id": 203
 }
 
 ### PUT update existing user
@@ -30,6 +32,7 @@ POST http://localhost:3000/auth/register
 Content-Type: application/json
 
 {
+  "name": "Mark",
   "email": "markomeara98@gmail.com",
   "password": "MySecurePass123"
 }

@@ -4,7 +4,6 @@ import { authMiddleware } from '../auth/authMiddleware.js';
 
 export const usersRouter = Router();
 
-// Protect all /users routes
 usersRouter.use(authMiddleware);
 
 // READ
@@ -16,10 +15,10 @@ usersRouter.get('/', async (req, res) => {
 
 // CREATE
 usersRouter.post('/', async (req, res) => {
-  const { name, email } = req.body;
+  const { auth_id, name, email } = req.body;
   const { data, error } = await supabase
     .from('users')
-    .insert([{ name, email }])
+    .insert([{auth_id, name, email }])
     .select();
   if (error) return res.status(500).json({ error: error.message });
   res.status(201).json(data);
@@ -28,10 +27,10 @@ usersRouter.post('/', async (req, res) => {
 // UPDATE
 usersRouter.put('/:id', async (req, res) => {
   const { id } = req.params;
-  const { name, email } = req.body;
+  const {auth_id, name, email } = req.body;
   const { data, error } = await supabase
     .from('users')
-    .update({ name, email })
+    .update({auth_id, name, email })
     .eq('id', id)
     .select();
   if (error) return res.status(500).json({ error: error.message });
