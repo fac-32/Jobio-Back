@@ -24,3 +24,25 @@ Content-Type: application/json
 
 ### DELETE delete existing user
 DELETE http://localhost:3000/users/1
+
+### 1. REGISTER new user
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+  "email": "test@gmail.com",
+  "password": "MySecurePass123"
+}
+
+### 2. LOGIN user
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "email": "test@gmail.com",
+  "password": "MySecurePass123"
+}
+
+### 3. GET users
+GET http://localhost:3000/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsImtpZCI6IkhCSGdkc0kvemFCaEpGMVUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2N3aG92bXVnYm9vd3FxeXFzZm9xLnN1cGFiYXNlLmNvL2F1dGgvdjEiLCJzdWIiOiJmYTQ3NGQyMS1kYWU1LTQ1ODMtYmU5MS1iNDg1MTEwMGZlM2QiLCJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzY0Njk3Nzg4LCJpYXQiOjE3NjQ2OTQxODgsImVtYWlsIjoibWFya29tZWFyYTk4QGdtYWlsLmNvbSIsInBob25lIjoiIiwiYXBwX21ldGFkYXRhIjp7InByb3ZpZGVyIjoiZW1haWwiLCJwcm92aWRlcnMiOlsiZW1haWwiXX0sInVzZXJfbWV0YWRhdGEiOnsiZW1haWwiOiJtYXJrb21lYXJhOThAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsInBob25lX3ZlcmlmaWVkIjpmYWxzZSwic3ViIjoiZmE0NzRkMjEtZGFlNS00NTgzLWJlOTEtYjQ4NTExMDBmZTNkIn0sInJvbGUiOiJhdXRoZW50aWNhdGVkIiwiYWFsIjoiYWFsMSIsImFtciI6W3sibWV0aG9kIjoicGFzc3dvcmQiLCJ0aW1lc3RhbXAiOjE3NjQ2OTQxODh9XSwic2Vzc2lvbl9pZCI6ImJkZmJmOTVhLWYyMDEtNDZmMi04ZDkzLWNjYWI0MmZlMzcwZCIsImlzX2Fub255bW91cyI6ZmFsc2V9.0AiISow7srC1EDyzaF3GJqAyT-zuK2eANGo60sIw7eU
