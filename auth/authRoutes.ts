@@ -17,7 +17,7 @@ authRouter.post('/login', async (req, res) => {
 
   res.json({
     user: data.user,
-    session: data.session,
+    session: data.session, // contains JWT
   });
 });
 
