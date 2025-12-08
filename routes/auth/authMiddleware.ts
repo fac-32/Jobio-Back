@@ -1,6 +1,6 @@
 import type { Request, Response, NextFunction } from 'express';
 import type { User } from '@supabase/supabase-js';
-import supabase from '../config/supabaseClient.js';
+import supabase from '../../config/supabaseClient';
 
 // Extend Express Request to include `user`
 declare module 'express-serve-static-core' {

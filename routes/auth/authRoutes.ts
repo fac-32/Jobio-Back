@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import supabase from '../config/supabaseClient.js';
+import supabase from '../../config/supabaseClient';
 
 export const authRouter = Router();
 
