@@ -1,5 +1,7 @@
 import type { Request, Response } from 'express';
 import supabase from '../config/supabaseClient.js';
+import { getMatchSuggestion } from './matchingService.js';
+
 
 export const matchJobForUser = async (req: Request, res: Response) => {
   const user = req.user; 
@@ -48,12 +50,13 @@ export const matchJobForUser = async (req: Request, res: Response) => {
       return res.status(500).json({ error: dealError.message });
     }
 
-    return res.json({
-      message: 'Fetched data for matching',
+    const matchResult = await getMatchSuggestion({
       jobDescription,
       cvKeywords: cvRow?.cv_keywords ?? null,
       dealbreakers: dealRow?.dealbreakers ?? null,
     });
+
+    return res.json(matchResult);
   } catch (err) {
     console.error(err);
     return res.status(500).json({ error: 'Internal server error' });
