@@ -1,36 +1,38 @@
 import { Router } from 'express';
-import supabase from '../config/supabaseClient.js';
+import supabase from '../../config/supabaseClient.js';
 import { authMiddleware } from '../auth/authMiddleware.js';
 
-export const usersCVsRouter = Router();
+export const usersDealbreakersRouter = Router();
 
-usersCVsRouter.use(authMiddleware);
+usersDealbreakersRouter.use(authMiddleware);
 
 // READ
-usersCVsRouter.get('/', async (req, res) => {
-    const { data, error } = await supabase.from('users_cvs').select('*');
+usersDealbreakersRouter.get('/', async (req, res) => {
+    const { data, error } = await supabase
+        .from('users_dealbreakers')
+        .select('*');
     if (error) return res.status(500).json({ error: error.message });
     res.json(data);
 });
 
 // CREATE
-usersCVsRouter.post('/', async (req, res) => {
-    const { user_id, cv_keywords } = req.body;
+usersDealbreakersRouter.post('/', async (req, res) => {
+    const { user_id, dealbreakers } = req.body;
     const { data, error } = await supabase
-        .from('users_cvs')
-        .insert([{ user_id, cv_keywords }])
+        .from('users_dealbreakers')
+        .insert([{ user_id, dealbreakers }])
         .select();
     if (error) return res.status(500).json({ error: error.message });
     res.status(201).json(data);
 });
 
 // UPDATE
-usersCVsRouter.put('/:id', async (req, res) => {
+usersDealbreakersRouter.put('/:id', async (req, res) => {
     const { id } = req.params;
-    const { user_id, cv_keywords } = req.body;
+    const { user_id, dealbreakers } = req.body;
     const { data, error } = await supabase
-        .from('users_cvs')
-        .update({ user_id, cv_keywords })
+        .from('users_dealbreakers')
+        .update({ user_id, dealbreakers })
         .eq('id', id)
         .select();
     if (error) return res.status(500).json({ error: error.message });
@@ -38,10 +40,10 @@ usersCVsRouter.put('/:id', async (req, res) => {
 });
 
 // DELETE
-usersCVsRouter.delete('/:id', async (req, res) => {
+usersDealbreakersRouter.delete('/:id', async (req, res) => {
     const { id } = req.params;
     const { data, error } = await supabase
-        .from('users_cvs')
+        .from('users_dealbreakers')
         .delete()
         .eq('id', id)
         .select();
