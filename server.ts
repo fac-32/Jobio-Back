@@ -4,6 +4,7 @@ import { usersRouter } from './users/usersRoutes.js';
 import { usersCVsRouter } from './users_cvs/usersCVsRoutes.js';
 import { usersDealbreakersRouter } from './users_dealbreakers/userDealbreakersRoutes.js';
 import cors from 'cors';
+import matchingRouter from './matching/matchingRoutes.js';
 
 const app = express();
 
@@ -23,6 +24,8 @@ app.use('/users_cvs', usersCVsRouter);
 app.use('/users_dealbreakers', usersDealbreakersRouter);
 
 app.use('/auth', authRouter);
+
+app.use('/matching', matchingRouter);
 
 app.get('/api', (_req, res) => {
     res.send('Hello World');
