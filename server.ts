@@ -1,7 +1,7 @@
 import express from 'express';
 import ROUTER from './routes/index.js';
 import cors from 'cors';
-import matchingRouter from './matching/matchingRoutes.js';
+// import matchingRouter from './matching/matchingRoutes.js';
 
 const app = express();
 
@@ -17,7 +17,7 @@ app.use(
 app.use(express.json());
 
 // final version after resolving conflict
-app.use('/matching', matchingRouter);
+// app.use('/matching', matchingRouter);
 
 app.get('/api', (_req, res) => {
     res.send('Hello World');

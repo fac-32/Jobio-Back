@@ -8,7 +8,7 @@
 
         // Environment Settings
         // See also https://aka.ms/tsconfig/module
-        "module": "nodenext",
+        "module": "ESNext",
         "target": "esnext",
         "types": ["node", "vitest"],
         // For nodejs:
@@ -42,15 +42,19 @@
         "moduleDetection": "force",
         "skipLibCheck": true,
         "esModuleInterop": true,
-        "moduleResolution": "nodenext",
+        "moduleResolution": "node",
         "allowJs": true,
-        "resolveJsonModule": true
+        "resolveJsonModule": true,
+        "allowSyntheticDefaultImports": true
+    },
+    "ts-node": {
+        "esm": true
     },
     "include": [
         "server.ts",
         "auth",
         "config",
-        "matching",
+        "routes/matching",
         "users",
         "users_cvs",
         "users_dealbreakers",

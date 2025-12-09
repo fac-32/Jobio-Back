@@ -1,6 +1,6 @@
 import type { Request, Response } from 'express';
-import supabase from '../config/supabaseClient.js';
 import { getMatchSuggestion } from './matchingService.js';
+import supabase from '../../config/supabaseClient.js';
 
 export const matchJobForUser = async (req: Request, res: Response) => {
     const user = req.user;

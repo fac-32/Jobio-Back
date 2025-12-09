@@ -1,4 +1,4 @@
-import { openai } from '../config/openaiClient.js';
+import { openai } from '../../config/openaiClient.js';
 
 type MatchInput = {
     jobDescription: string;
