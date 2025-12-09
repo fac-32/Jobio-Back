@@ -16,10 +16,8 @@ app.use(
 
 app.use(express.json());
 
-
 // final version after resolving conflict
 app.use('/matching', matchingRouter);
-
 
 app.get('/api', (_req, res) => {
     res.send('Hello World');

@@ -41,7 +41,6 @@ Return ONLY valid JSON with this structure:
 
     const text = response.output_text;
 
-
     try {
         return JSON.parse(text);
     } catch {
