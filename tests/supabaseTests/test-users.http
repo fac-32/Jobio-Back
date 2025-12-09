@@ -45,6 +45,11 @@ Content-Type: application/json
   "password": "MySecurePass123"
 }
 
+### 2. LOGOUT user
+POST http://localhost:3000/auth/logout
+Content-Type: application/json
+Authorization: Bearer 
+
 ### 3. GET users
 GET http://localhost:3000/users
 Authorization: Bearer
