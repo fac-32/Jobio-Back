@@ -60,6 +60,9 @@ authRouter.post('/register', async (req, res) => {
     const { data, error } = await supabase.auth.signUp({
         email,
         password,
+        options: {
+            emailRedirectTo: 'http://localhost:5173/confirm-email',
+        },
     });
 
     if (error || !data.user) {
