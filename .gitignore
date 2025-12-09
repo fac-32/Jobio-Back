@@ -28,3 +28,12 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
+
+
+# TypeScript
+*.js
+*.js.map
+*.d.ts
+*.d.ts.map
+/dist
+/node_modules

@@ -2,7 +2,7 @@ import { Router } from "express";
 import { authMiddleware } from "../auth/authMiddleware.js";
 import { matchJobForUser } from "./matchingController.js";
 
-export const matchingRouter = Router();
+const matchingRouter = Router();
 
 matchingRouter.use(authMiddleware);
 

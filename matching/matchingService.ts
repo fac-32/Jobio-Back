@@ -1,5 +1,4 @@
-// matching/matchingService.ts
-import { openai } from '../config/openaiClient.js';
+import { openai } from "../config/openaiClient.js";
 
 type MatchInput = {
   jobDescription: string;
@@ -35,16 +34,24 @@ Return ONLY valid JSON with this structure:
 }
 `;
 
-  const completion = await openai.chat.completions.create({
-    model: 'gpt-4o-mini',
-    messages: [
-      { role: 'system', content: 'You are a helpful job-matching assistant.' },
-      { role: 'user', content: prompt },
-    ],
-    temperature: 0.2,
+  const response = await openai.responses.create({
+    model: "gpt-4.1-mini",
+    input: prompt,
   });
 
-  const text = completion.choices[0]?.message?.content ?? '{}';
+  // Extract text output
+  const text = response.output_text;
+
+  // const completion = await openai.chat.completions.create({
+  //   model: 'gpt-4o-mini',
+  //   messages: [
+  //     { role: 'system', content: 'You are a helpful job-matching assistant.' },
+  //     { role: 'user', content: prompt },
+  //   ],
+  //   temperature: 0.2,
+  // });
+
+  // const text = completion.choices[0]?.message?.content ?? '{}';
 
   // Try to parse the JSON; if it fails, wrap it in an error object
   try {

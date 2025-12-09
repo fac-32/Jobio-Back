@@ -3,7 +3,8 @@
     "compilerOptions": {
         // File Layout
         // "rootDir": "./src",
-        // "outDir": "./dist",
+        "outDir": "./dist",
+        "rootDir": "./", 
 
         // Environment Settings
         // See also https://aka.ms/tsconfig/module
@@ -39,7 +40,21 @@
         "isolatedModules": true,
         "noUncheckedSideEffectImports": true,
         "moduleDetection": "force",
-        "skipLibCheck": true
+        "skipLibCheck": true,
+        "esModuleInterop": true,
+        "moduleResolution": "nodenext",
+        "allowJs": true,
+        "resolveJsonModule": true
     },
-    "include": ["src", "tests"]
+    "include": [
+        "server.ts",
+        "auth",
+        "config",
+        "matching",
+        "users",
+        "users_cvs",
+        "users_dealbreakers",
+        "tests",
+        "types"
+    ]
 }
