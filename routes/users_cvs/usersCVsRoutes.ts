@@ -1,36 +1,36 @@
 import { Router } from 'express';
-import supabase from '../config/supabaseClient.js';
+import supabase from '../../config/supabaseClient.js';
 import { authMiddleware } from '../auth/authMiddleware.js';
 
-export const usersRouter = Router();
+export const usersCVsRouter = Router();
 
-usersRouter.use(authMiddleware);
+usersCVsRouter.use(authMiddleware);
 
 // READ
-usersRouter.get('/', async (req, res) => {
-    const { data, error } = await supabase.from('users').select('*');
+usersCVsRouter.get('/', async (req, res) => {
+    const { data, error } = await supabase.from('users_cvs').select('*');
     if (error) return res.status(500).json({ error: error.message });
     res.json(data);
 });
 
 // CREATE
-usersRouter.post('/', async (req, res) => {
-    const { auth_id, name, email } = req.body;
+usersCVsRouter.post('/', async (req, res) => {
+    const { user_id, cv_keywords } = req.body;
     const { data, error } = await supabase
-        .from('users')
-        .insert([{ auth_id, name, email }])
+        .from('users_cvs')
+        .insert([{ user_id, cv_keywords }])
         .select();
     if (error) return res.status(500).json({ error: error.message });
     res.status(201).json(data);
 });
 
 // UPDATE
-usersRouter.put('/:id', async (req, res) => {
+usersCVsRouter.put('/:id', async (req, res) => {
     const { id } = req.params;
-    const { auth_id, name, email } = req.body;
+    const { user_id, cv_keywords } = req.body;
     const { data, error } = await supabase
-        .from('users')
-        .update({ auth_id, name, email })
+        .from('users_cvs')
+        .update({ user_id, cv_keywords })
         .eq('id', id)
         .select();
     if (error) return res.status(500).json({ error: error.message });
@@ -38,10 +38,10 @@ usersRouter.put('/:id', async (req, res) => {
 });
 
 // DELETE
-usersRouter.delete('/:id', async (req, res) => {
+usersCVsRouter.delete('/:id', async (req, res) => {
     const { id } = req.params;
     const { data, error } = await supabase
-        .from('users')
+        .from('users_cvs')
         .delete()
         .eq('id', id)
         .select();
