@@ -61,7 +61,7 @@ authRouter.post('/register', async (req, res) => {
         email,
         password,
         options: {
-            emailRedirectTo: 'http://localhost:5173/confirm-email'
+            emailRedirectTo: 'http://localhost:5173/confirm-email',
         },
     });
 
