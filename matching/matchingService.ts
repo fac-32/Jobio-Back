@@ -1,17 +1,17 @@
-import { openai } from "../config/openaiClient.js";
+import { openai } from '../config/openaiClient.js';
 
 type MatchInput = {
-  jobDescription: string;
-  cvKeywords: string[] | string | null;
-  dealbreakers: Record<string, unknown> | null;
+    jobDescription: string;
+    cvKeywords: string[] | string | null;
+    dealbreakers: Record<string, unknown> | null;
 };
 
 export const getMatchSuggestion = async ({
-  jobDescription,
-  cvKeywords,
-  dealbreakers,
+    jobDescription,
+    cvKeywords,
+    dealbreakers,
 }: MatchInput) => {
-  const prompt = `
+    const prompt = `
 You are a job-matching assistant.
 
 User profile (CV keywords):
@@ -34,37 +34,37 @@ Return ONLY valid JSON with this structure:
 }
 `;
 
-  const response = await openai.responses.create({
-    model: "gpt-4.1-mini",
-    input: prompt,
-  });
+    const response = await openai.responses.create({
+        model: 'gpt-4.1-mini',
+        input: prompt,
+    });
 
-  // Extract text output
-  const text = response.output_text;
+    // Extract text output
+    const text = response.output_text;
 
-  // const completion = await openai.chat.completions.create({
-  //   model: 'gpt-4o-mini',
-  //   messages: [
-  //     { role: 'system', content: 'You are a helpful job-matching assistant.' },
-  //     { role: 'user', content: prompt },
-  //   ],
-  //   temperature: 0.2,
-  // });
+    // const completion = await openai.chat.completions.create({
+    //   model: 'gpt-4o-mini',
+    //   messages: [
+    //     { role: 'system', content: 'You are a helpful job-matching assistant.' },
+    //     { role: 'user', content: prompt },
+    //   ],
+    //   temperature: 0.2,
+    // });
 
-  // const text = completion.choices[0]?.message?.content ?? '{}';
+    // const text = completion.choices[0]?.message?.content ?? '{}';
 
-  // Try to parse the JSON; if it fails, wrap it in an error object
-  try {
-    return JSON.parse(text);
-  } catch {
-    return {
-      overall_match_score: 0,
-      deal_breakers_violated: [],
-      matched_skills: [],
-      missing_must_have_skills: [],
-      explanation_short: 'Failed to parse model output as JSON.',
-      recommendation: 'do_not_apply',
-      raw: text,
-    };
-  }
+    // Try to parse the JSON; if it fails, wrap it in an error object
+    try {
+        return JSON.parse(text);
+    } catch {
+        return {
+            overall_match_score: 0,
+            deal_breakers_violated: [],
+            matched_skills: [],
+            missing_must_have_skills: [],
+            explanation_short: 'Failed to parse model output as JSON.',
+            recommendation: 'do_not_apply',
+            raw: text,
+        };
+    }
 };

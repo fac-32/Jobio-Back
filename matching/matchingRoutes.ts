@@ -1,6 +1,6 @@
-import { Router } from "express";
-import { authMiddleware } from "../auth/authMiddleware.js";
-import { matchJobForUser } from "./matchingController.js";
+import { Router } from 'express';
+import { authMiddleware } from '../auth/authMiddleware.js';
+import { matchJobForUser } from './matchingController.js';
 
 const matchingRouter = Router();
 
