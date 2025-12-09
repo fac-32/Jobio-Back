@@ -3,11 +3,12 @@
     "compilerOptions": {
         // File Layout
         // "rootDir": "./src",
-        // "outDir": "./dist",
+        "outDir": "./dist",
+        "rootDir": "./",
 
         // Environment Settings
         // See also https://aka.ms/tsconfig/module
-        "module": "nodenext",
+        "module": "ESNext",
         "target": "esnext",
         "types": ["node", "vitest"],
         // For nodejs:
@@ -39,7 +40,25 @@
         "isolatedModules": true,
         "noUncheckedSideEffectImports": true,
         "moduleDetection": "force",
-        "skipLibCheck": true
+        "skipLibCheck": true,
+        "esModuleInterop": true,
+        "moduleResolution": "node",
+        "allowJs": true,
+        "resolveJsonModule": true,
+        "allowSyntheticDefaultImports": true
     },
-    "include": ["src", "tests"]
+    "ts-node": {
+        "esm": true
+    },
+    "include": [
+        "server.ts",
+        "auth",
+        "config",
+        "routes/matching",
+        "users",
+        "users_cvs",
+        "users_dealbreakers",
+        "tests",
+        "types"
+    ]
 }
