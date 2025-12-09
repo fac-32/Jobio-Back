@@ -20,6 +20,24 @@ authRouter.post('/login', async (req, res) => {
     });
 });
 
+// Authentication - logout
+authRouter.post('/logout', async (req, res) => {
+    const authHeader = req.headers.authorization;
+    const token = authHeader && authHeader.split(' ')[1];
+
+    if (!token) {
+        return res.status(401).json({ error: 'No token provided' });
+    }
+
+    const { error } = await supabase.auth.admin.signOut(token);
+
+    if (error) {
+        return res.status(400).json({ error: error.message });
+    }
+
+    res.json({ message: 'Logged out successfully' });
+});
+
 // Authentication - register
 authRouter.post('/register', async (req, res) => {
     const { name, email, password } = req.body;
