@@ -49,29 +49,18 @@ export const matchJobForUser = async (req: Request, res: Response) => {
             return res.status(500).json({ error: dealError.message });
         }
 
-        // 4) DEBUG: return just DB data, no OpenAI yet
-        // return res.json({
-        //   message: 'Fetched data for matching (no OpenAI yet)',
-        //   jobDescription,
-        //   cvKeywords: cvRow?.cv_keywords ?? null,
-        //   dealbreakers: dealRow?.dealbreakers ?? null,
-        // });
-
-        // later, when OpenAI is stable, replace the block above with:
-
+        
         const matchResult = await getMatchSuggestion({
             jobDescription,
             cvKeywords: cvRow?.cv_keywords ?? [],
             dealbreakers: dealRow?.dealbreakers ?? [],
-            // cvKeywords: cvRow?.cv_keywords ?? null,
-            // dealbreakers: dealRow?.dealbreakers ?? null,
+
         });
 
         return res.json(matchResult);
     } catch (err: unknown) {
         console.error(err);
 
-        // Narrow the error type safely
         const message =
             err instanceof Error ? err.message : 'Internal server error';
 
