@@ -37,3 +37,5 @@ yarn-error.log*
 *.d.ts.map
 /dist
 /node_modules
+
+*DUMMY*
