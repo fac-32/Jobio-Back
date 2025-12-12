@@ -1,10 +1,7 @@
 import { Router } from 'express';
 import supabase from '../../config/supabaseClient.js';
-import { authMiddleware } from '../auth/authMiddleware.js';
 
 export const usersRouter = Router();
-
-usersRouter.use(authMiddleware);
 
 // READ
 usersRouter.get('/', async (req, res) => {
