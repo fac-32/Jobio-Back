@@ -1,7 +1,8 @@
 import express from 'express';
 import ROUTER from './routes/index.js';
 import cors from 'cors';
-// import matchingRouter from './matching/matchingRoutes.js';
+import swaggerJsdoc from 'swagger-jsdoc';
+import swaggerUi from 'swagger-ui-express';
 
 const app = express();
 
@@ -14,10 +15,20 @@ app.use(
     }),
 );
 
-app.use(express.json());
+const options = {
+  definition: {
+    openapi: '3.0.0',
+    info: { title: 'Jobio API', version: '1.0.0' },
+    servers: [{ url: 'http://localhost:3000' }]
+  },
+  apis: ['./routes/**/*.ts']
+};
 
-// final version after resolving conflict
-// app.use('/matching', matchingRouter);
+const specs = swaggerJsdoc(options);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
+
+
+app.use(express.json());
 
 app.get('/api', (_req, res) => {
     res.send('Hello World');

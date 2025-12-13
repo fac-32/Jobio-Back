@@ -3,7 +3,20 @@ import supabase from '../../config/supabaseClient.js';
 
 export const usersRouter = Router();
 
-// READ
+// READ - Get all users or filter by email
+/**
+ * @swagger
+ * /users:
+ *   get:
+ *     summary: Get users (optional email filter)
+ *     parameters:
+ *       - in: query
+ *         name: email
+ *         schema: { type: string }
+ *     responses:
+ *       200:
+ *         description: List of users
+ */
 usersRouter.get('/', async (req, res) => {
     const { email } = req.query;
 
@@ -22,6 +35,25 @@ usersRouter.get('/', async (req, res) => {
 });
 
 // CREATE
+/**
+ * @swagger
+ * /users:
+ *   post:
+ *     summary: Create new user
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               auth_id: { type: string }
+ *               name: { type: string }
+ *               email: { type: string }
+ *     responses:
+ *       201:
+ *         description: User created
+ */
 usersRouter.post('/', async (req, res) => {
     const { auth_id, name, email } = req.body;
     const { data, error } = await supabase
@@ -33,6 +65,30 @@ usersRouter.post('/', async (req, res) => {
 });
 
 // UPDATE
+/**
+ * @swagger
+ * /users/{id}:
+ *   put:
+ *     summary: Update user by ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema: { type: integer }
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               auth_id: { type: string }
+ *               name: { type: string }
+ *               email: { type: string }
+ *     responses:
+ *       200:
+ *         description: User updated
+ */
 usersRouter.put('/:id', async (req, res) => {
     const { id } = req.params;
     const { auth_id, name, email } = req.body;
@@ -46,6 +102,20 @@ usersRouter.put('/:id', async (req, res) => {
 });
 
 // DELETE
+/**
+ * @swagger
+ * /users/{id}:
+ *   delete:
+ *     summary: Delete user by ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema: { type: integer }
+ *     responses:
+ *       200:
+ *         description: User deleted
+ */
 usersRouter.delete('/:id', async (req, res) => {
     const { id } = req.params;
     const { data, error } = await supabase
