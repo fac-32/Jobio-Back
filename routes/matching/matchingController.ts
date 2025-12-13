@@ -49,6 +49,13 @@ export const matchJobForUser = async (req: Request, res: Response) => {
             return res.status(500).json({ error: dealError.message });
         }
 
+        console.log('MATCH INPUT DEBUG:', {
+        jobDescription,
+        cvKeywords: cvRow?.cv_keywords ?? null,
+        dealbreakers: dealRow?.dealbreakers ?? null,
+        });
+
+
         const matchResult = await getMatchSuggestion({
             jobDescription,
             cvKeywords: cvRow?.cv_keywords ?? [],
