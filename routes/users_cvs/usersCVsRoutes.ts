@@ -5,7 +5,17 @@ export const usersCVsRouter = Router();
 
 // READ
 usersCVsRouter.get('/', async (req, res) => {
-    const { data, error } = await supabase.from('users_cvs').select('*');
+    const { user_id } = req.query;
+
+    let query = supabase.from('users_cvs').select('*');
+
+    // if provided filter by user_id
+    if (user_id) {
+        query = query.eq('user_id', user_id);
+    }
+
+    const { data, error } = await query;
+
     if (error) return res.status(500).json({ error: error.message });
     res.json(data);
 });
