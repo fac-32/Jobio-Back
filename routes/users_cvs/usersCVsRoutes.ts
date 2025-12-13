@@ -74,7 +74,7 @@ usersCVsRouter.get('/', async (req, res) => {
  *       500:
  *         description: Server error
  */
-usersCVsRouter.post('/upload', upload.single('cv'), async (req, res) => {
+usersCVsRouter.post('/', upload.single('cv'), async (req, res) => {
     if (!req.file) {
         return res.status(400).json({ error: 'No file uploaded' });
     }
