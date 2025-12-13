@@ -1,0 +1,38 @@
+### Please try the parsing out
+### Just add the respective types of file (pdf, docx, txt) to the supabaseTests folder
+### make sure your file name contains the string of DUMMY
+### since I've added it to gitignore, you can use your own files without worrying about pushing to remote
+
+### this route is to test pdf parsing
+### please match the file name on line 12 and relative path on line 15
+POST http://localhost:3000/upload-cv
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="cv"; filename="dummy-cv.pdf"
+Content-Type: application/pdf
+
+< ./DUMMY-CV.pdf
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+### this is for docx, again, name matching on line 23 and 26
+POST http://localhost:3000/upload-cv
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="cv"; filename="dummy-cv.docx"
+Content-Type: application/docx
+
+< ./DUMMY-CV.docx
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+### this is for txt, name matching on line 34 and 37
+POST http://localhost:3000/upload-cv
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="cv"; filename="dummy-cv.txt"
+Content-Type: application/txt
+
+< ./DUMMY-CV.txt
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
