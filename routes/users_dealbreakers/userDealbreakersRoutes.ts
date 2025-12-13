@@ -5,9 +5,17 @@ export const usersDealbreakersRouter = Router();
 
 // READ
 usersDealbreakersRouter.get('/', async (req, res) => {
-    const { data, error } = await supabase
-        .from('users_dealbreakers')
-        .select('*');
+    const { user_id } = req.query;
+
+    let query = supabase.from('users_dealbreakers').select('*');
+
+    // if provided filter by user_id
+    if (user_id) {
+        query = query.eq('user_id', user_id);
+    }
+
+    const { data, error } = await query;
+
     if (error) return res.status(500).json({ error: error.message });
     res.json(data);
 });
