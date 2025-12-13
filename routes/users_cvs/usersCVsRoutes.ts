@@ -1,10 +1,7 @@
 import { Router } from 'express';
 import supabase from '../../config/supabaseClient.js';
-import { authMiddleware } from '../auth/authMiddleware.js';
 
 export const usersCVsRouter = Router();
-
-usersCVsRouter.use(authMiddleware);
 
 // READ
 usersCVsRouter.get('/', async (req, res) => {
