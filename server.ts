@@ -16,12 +16,12 @@ app.use(
 );
 
 const options = {
-  definition: {
-    openapi: '3.0.0',
-    info: { title: 'Jobio API', version: '1.0.0' },
-    servers: [{ url: 'http://localhost:3000' }]
-  },
-  apis: ['./routes/**/*.ts']
+    definition: {
+        openapi: '3.0.0',
+        info: { title: 'Jobio API', version: '1.0.0' },
+        servers: [{ url: 'http://localhost:3000' }],
+    },
+    apis: ['./routes/**/*.ts'],
 };
 
 const specs = swaggerJsdoc(options);
