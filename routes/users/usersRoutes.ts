@@ -5,8 +5,19 @@ export const usersRouter = Router();
 
 // READ
 usersRouter.get('/', async (req, res) => {
-    const { data, error } = await supabase.from('users').select('*');
+    const { email } = req.query;
+
+    let query = supabase.from('users').select('*');
+
+    // if provided filter by email
+    if (email) {
+        query = query.eq('email', email);
+    }
+
+    const { data, error } = await query;
+
     if (error) return res.status(500).json({ error: error.message });
+
     res.json(data);
 });
 
