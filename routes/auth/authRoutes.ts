@@ -4,6 +4,36 @@ import supabase from '../../config/supabaseClient.js';
 export const authRouter = Router();
 
 // Authentication - login
+/**
+ * @swagger
+ * /auth/login:
+ *   post:
+ *     summary: Log in a user
+ *     description: Authenticates a user with email and password and returns a session containing a JWT.
+ *     tags:
+ *       - Auth
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - email
+ *               - password
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 format: email
+ *               password:
+ *                 type: string
+ *                 format: password
+ *     responses:
+ *       200:
+ *         description: User logged in successfully
+ *       400:
+ *         description: Invalid credentials or authentication error
+ */
 authRouter.post('/login', async (req, res) => {
     const { email, password } = req.body;
 
@@ -21,6 +51,24 @@ authRouter.post('/login', async (req, res) => {
 });
 
 // Authentication - logout
+/**
+ * @swagger
+ * /auth/logout:
+ *   post:
+ *     summary: Log out a user
+ *     description: Invalidates the current JWT access token.
+ *     tags:
+ *       - Auth
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Logged out successfully
+ *       401:
+ *         description: No token provided
+ *       400:
+ *         description: Logout error
+ */
 authRouter.post('/logout', async (req, res) => {
     const authHeader = req.headers.authorization;
     const token = authHeader && authHeader.split(' ')[1];
@@ -39,6 +87,43 @@ authRouter.post('/logout', async (req, res) => {
 });
 
 // Authentication - register
+/**
+ * @swagger
+ * /auth/register:
+ *   post:
+ *     summary: Register a new user
+ *     description: Creates a new Supabase auth user and a corresponding row in the users table.
+ *     tags:
+ *       - Auth
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - name
+ *               - email
+ *               - password
+ *             properties:
+ *               name:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *                 format: email
+ *               password:
+ *                 type: string
+ *                 format: password
+ *     responses:
+ *       201:
+ *         description: User registered successfully
+ *       400:
+ *         description: Sign up failed
+ *       409:
+ *         description: User already registered
+ *       500:
+ *         description: Server error while checking or inserting user
+ */
 authRouter.post('/register', async (req, res) => {
     const { name, email, password } = req.body;
 
