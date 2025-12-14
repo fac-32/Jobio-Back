@@ -50,11 +50,10 @@ export const matchJobForUser = async (req: Request, res: Response) => {
         }
 
         console.log('MATCH INPUT DEBUG:', {
-        jobDescription,
-        cvKeywords: cvRow?.cv_keywords ?? null,
-        dealbreakers: dealRow?.dealbreakers ?? null,
+            jobDescription,
+            cvKeywords: cvRow?.cv_keywords ?? null,
+            dealbreakers: dealRow?.dealbreakers ?? null,
         });
-
 
         const matchResult = await getMatchSuggestion({
             jobDescription,
