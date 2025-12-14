@@ -18,7 +18,6 @@ ROUTER.use('/users_dealbreakers', usersDealbreakersRouter);
 
 testApp.use(express.json());
 
-
 testApp.use('/', ROUTER);
 
 export default testApp;
