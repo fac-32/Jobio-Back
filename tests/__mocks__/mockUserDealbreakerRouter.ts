@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import { usersRouter } from '../../routes/users/usersRoutes';
+import { usersDealbreakersRouter } from '../../routes/users_dealbreakers/userDealbreakersRoutes';
 
 const testApp = express();
 
@@ -14,13 +14,10 @@ testApp.use(
 );
 
 const ROUTER = express.Router();
-ROUTER.use('/users', usersRouter);
+ROUTER.use('/users_dealbreakers', usersDealbreakersRouter);
 
 testApp.use(express.json());
 
-testApp.get('/api', (_req, res) => {
-    res.send('Hello World');
-});
 
 testApp.use('/', ROUTER);
 

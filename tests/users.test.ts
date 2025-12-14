@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import request from 'supertest';
 import supabase from '../config/supabaseClient.js';
-import testApp from './__mocks__/mockUserRoutes.js';
+import testApp from './__mocks__/mockUserRouter.js';
 
 const mockSupabaseValue = {
     select: vi.fn().mockReturnThis(),
