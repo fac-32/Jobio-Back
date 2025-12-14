@@ -9,7 +9,8 @@
     "scripts": {
         "test": "vitest",
         "dev": "nodemon --exec \"node --loader ts-node/esm\" server.ts",
-        "format": "prettier -wc ."
+        "format": "prettier -wc .",
+        "deploy-render": "node --loader ts-node/esm server.ts"
     },
     "dependencies": {
         "@supabase/supabase-js": "^2.86.0",
