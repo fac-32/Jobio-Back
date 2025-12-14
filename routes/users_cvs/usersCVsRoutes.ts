@@ -1,5 +1,9 @@
 import { Router } from 'express';
 import supabase from '../../config/supabaseClient.js';
+import multer from 'multer';
+import { extractCvText } from './users_CVsMiddleware.js';
+
+const upload = multer({ storage: multer.memoryStorage() }); // keep file in memory
 
 export const usersCVsRouter = Router();
 
@@ -70,7 +74,25 @@ usersCVsRouter.get('/', async (req, res) => {
  *       500:
  *         description: Server error
  */
-usersCVsRouter.post('/', async (req, res) => {
+usersCVsRouter.post('/', upload.single('cv'), async (req, res) => {
+    if (!req.file) {
+        return res.status(400).json({ error: 'No file uploaded' });
+    }
+
+    let cvText = null;
+
+    try {
+        cvText = await extractCvText(req.file);
+        console.log('Extracted CV Text:', cvText);
+        // res.json({ text });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Failed to parse CV' });
+    }
+
+    // TODO: add LLM handling here
+    // cv_keywords should come from LLM processing instead of req.body
+
     const { user_id, cv_keywords } = req.body;
     const { data, error } = await supabase
         .from('users_cvs')
