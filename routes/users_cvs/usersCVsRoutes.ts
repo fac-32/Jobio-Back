@@ -122,22 +122,30 @@ usersCVsRouter.post(
 
             // Convert array ["React", "CSS"] -> String "React, CSS" for DB storage
             // (Assuming your Supabase column is text. If it's text[], remove .join)
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             const cv_keywords = keywordsArray.join(', ');
 
-            // const { user_id, cv_keywords } = req.body;
-            // 4. Save to Supabase
-            const { data, error } = await supabase
-                .from('users_cvs')
-                .insert([{ user_id, cv_keywords }])
-                .select();
+            // // const { user_id, cv_keywords } = req.body;
+            // // 4. Save to Supabase
+            // const { data, error } = await supabase
+            //     .from('users_cvs')
+            //     .insert([{ user_id, cv_keywords }])
+            //     .select();
 
-            if (error) throw error;
+            // if (error) throw error;
 
-            // 5. Response
-            res.status(201).json({
-                message: 'CV processed successfully',
-                record: data[0],
-                // Sending the array back allows the Frontend to display tags immediately
+            // // 5. Response
+            // res.status(201).json({
+            //     message: 'CV processed successfully',
+            //     record: data[0],
+            //     // Sending the array back allows the Frontend to display tags immediately
+            //     generated_tags: keywordsArray,
+            // });
+
+            // We skip sending 'record' because we didn't save it,
+            // but we send 'generated_tags' so the UI still works.
+            res.status(200).json({
+                message: 'CV processed (DB Save Skipped)',
                 generated_tags: keywordsArray,
             });
         } catch (err) {

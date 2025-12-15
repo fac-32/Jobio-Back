@@ -71,7 +71,29 @@ usersDealbreakersRouter.get('/', async (req, res) => {
  *         description: Server error
  */
 usersDealbreakersRouter.post('/', async (req, res) => {
+    console.log('--- Deal-breakers Saving Request Started ---');
+    // 1. Extract the token
+    const token = req.headers.authorization?.split(' ')[1];
+    if (!token) {
+        return res.status(401).json({ error: 'Missing authorization token' });
+    }
+
+    // 2. Verify user with Supabase
+    const {
+        data: { user },
+        error: authError,
+    } = await supabase.auth.getUser(token);
+
+    if (authError || !user) {
+        return res.status(401).json({ error: 'Invalid or expired session' });
+    }
+
+    // 3. Extract payload (Ignore user_id in body, use the one from token)
     const { user_id, dealbreakers } = req.body;
+
+    console.log(`DealBreakers reseived: ${dealbreakers}`);
+
+    // 4. Insert into DB
     const { data, error } = await supabase
         .from('users_dealbreakers')
         .insert([{ user_id, dealbreakers }])
