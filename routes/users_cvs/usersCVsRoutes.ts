@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import type { Request, Response } from 'express';
 import supabase from '../../config/supabaseClient.js';
 import multer from 'multer';
 import { extractCvText } from './users_CVsMiddleware.js';
@@ -46,6 +47,7 @@ usersCVsRouter.get('/', async (req, res) => {
 });
 
 // CREATE
+// Handles: File Upload -> Text Extraction -> Keyword extraction (openAI)  -> DB Insert
 /**
  * @swagger
  * /users_cvs:
@@ -75,52 +77,75 @@ usersCVsRouter.get('/', async (req, res) => {
  *       500:
  *         description: Server error
  */
-usersCVsRouter.post('/', upload.single('cv'), async (req, res) => {
-    // 1. Validation
-    if (!req.file) {
-        return res.status(400).json({ error: 'No file uploaded' });
-    }
+usersCVsRouter.post(
+    '/',
+    upload.single('cv'),
+    async (req: Request, res: Response) => {
+        console.log('--- CV Processing Request Started ---');
 
-    const { user_id } = req.body;
-    if (!user_id) {
-        return res.status(400).json({ error: 'user_id is required' });
-    }
+        // 1. Validation
+        if (!req.file) {
+            return res.status(400).json({ error: 'No file uploaded' });
+        }
+        console.log(`File Type: ${req.file.mimetype}, Size: ${req.file.size}`);
 
-    let cvText = null;
+        // Get ID securely from the token (populated by authMiddleware)
+        const user = req.user;
+        // const { user_id } = req.body;
+        if (!user || !user.id) {
+            return res.status(400).json({ error: 'user_id is required' });
+        }
 
-    try {
-        // 2. Extract Plain Text (using the middleware logic)
-        cvText = await extractCvText(req.file);
-        console.log('Extracted CV Text:', cvText);
-        // 3. AI Keyword Extraction
-        console.log('Generating keywords with OpenAI...');
-        const keywordsArray = await extractKeywordsFromCv(cvText);
+        // Note: Supabase Auth IDs are UUID STRINGS (e.g. "a0eebc99-9c0b...")
+        const user_id = user.id;
+        console.log(`Processing for User ID: ${user_id}`);
 
-        // Convert array ["React", "CSS"] -> String "React, CSS" for DB storage
-        // (Assuming your Supabase column is text. If it's text[], remove .join)
-        const cv_keywords = keywordsArray.join(', ');
+        let cvText = null;
 
-        // const { user_id, cv_keywords } = req.body;
-        // 4. Save to Supabase
-        const { data, error } = await supabase
-            .from('users_cvs')
-            .insert([{ user_id, cv_keywords }])
-            .select();
+        try {
+            // 2. Extract Plain Text (using the middleware logic)
+            cvText = await extractCvText(req.file);
+            // DEBUG: Only show first 100 chars to prove it exists without flooding console
+            console.log(`--- 2. Text Extracted (${cvText.length} chars) ---`);
+            console.log('Preview:', cvText.substring(0, 100) + '...');
 
-        if (error) throw error;
+            // 3. AI Keyword Extraction
+            console.log('--- 3. Calling AI Service ---');
+            const keywordsArray = await extractKeywordsFromCv(cvText);
 
-        // 5. Response
-        res.status(201).json({
-            message: 'CV processed successfully',
-            record: data[0],
-            // Sending the array back allows the Frontend to display tags immediately
-            generated_tags: keywordsArray,
-        });
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: 'Failed to parse CV' });
-    }
-});
+            console.log('--- 4. AI Result ---');
+            console.log('Keywords:', keywordsArray);
+
+            if (keywordsArray.length === 0) {
+                console.warn('⚠️ WARNING: AI returned 0 keywords.');
+            }
+
+            // Convert array ["React", "CSS"] -> String "React, CSS" for DB storage
+            // (Assuming your Supabase column is text. If it's text[], remove .join)
+            const cv_keywords = keywordsArray.join(', ');
+
+            // const { user_id, cv_keywords } = req.body;
+            // 4. Save to Supabase
+            const { data, error } = await supabase
+                .from('users_cvs')
+                .insert([{ user_id, cv_keywords }])
+                .select();
+
+            if (error) throw error;
+
+            // 5. Response
+            res.status(201).json({
+                message: 'CV processed successfully',
+                record: data[0],
+                // Sending the array back allows the Frontend to display tags immediately
+                generated_tags: keywordsArray,
+            });
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({ error: 'Failed to parse CV' });
+        }
+    },
+);
 
 // UPDATE
 /**
