@@ -31,9 +31,9 @@ POST http://localhost:3000/auth/register
 Content-Type: application/json
 
 {
-  "name": "Mark",
-  "email": "markomeara98@gmail.com",
-  "password": "MySecurePass123"
+  "name": "",
+  "email": "",
+  "password": ""
 }
 
 ### 2. LOGIN user
@@ -41,8 +41,8 @@ POST http://localhost:3000/auth/login
 Content-Type: application/json
 
 {
-  "email": "markomeara98@gmail.com",
-  "password": "MySecurePass123"
+  "email": "",
+  "password": ""
 }
 
 ### 2. LOGOUT user
@@ -54,4 +54,10 @@ Authorization: Bearer
 GET http://localhost:3000/users
 Authorization: Bearer
 
+### 3. GET user cvs via id
+GET http://localhost:3000/users_cvs?user_id=9
+Authorization: Bearer 
+### 3. GET user dealbreakers via id
+GET http://localhost:3000/users_dealbreakers?user_id=8
+Authorization: Bearer 
 

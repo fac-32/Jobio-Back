@@ -1,0 +1,48 @@
+# Jobio Backend
+
+Robust backend API for the Jobio website, handling user authentication, job matching and user bio management with Node.js, Express, and Supabase.
+
+## Features
+
+- User registration and JWT authentication.
+- RESTful API endpoints with input validation.
+- API endpoints for authentication via Supabase, job matching via OpenAI API and accessing database tables.
+- Database integration via Supabase for scalable storage​.
+- Testing endpoints using REST Client extension.
+
+## Tech Stack
+
+**Backend:** Node.js, Express.js
+**Database:** Supabase (PostgreSQL)
+**Auth:** JWT tokens
+**Deployment:** Render
+
+## Quick Start
+
+Clone the repository:
+
+```
+git clone https://github.com/fac-32/Jobio-Back.git
+cd Jobio-Back
+```
+
+Install dependencies:
+
+```
+npm install
+```
+
+Set up environment variables (create .env file):
+
+```
+SUPABASE_URL=your_supabase_url
+SUPABASE_ANON_KEY=your_supabase_key
+PORT=3000
+OPENAI_API_KEY=your_openai_key
+```
+
+Run the development server:
+
+```
+npm run dev
+```
