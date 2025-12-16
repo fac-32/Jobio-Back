@@ -7,7 +7,6 @@ import { usersDealbreakersRouter } from './users_dealbreakers/userDealbreakersRo
 import { matchingRouter } from './matching/matchingRoutes.js';
 import { emailVerificationRouter } from './emailVerification/emailVerficationRoute.js';
 
-
 const ROUTER = express.Router();
 
 ROUTER.use('/auth', authRouter);
