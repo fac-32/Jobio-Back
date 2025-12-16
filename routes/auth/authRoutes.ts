@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import supabase from '../../config/supabaseClient.js';
+import { verifyEmail } from '../../utils/verifyEmail.js';
 
 export const authRouter = Router();
 
@@ -126,6 +127,23 @@ authRouter.post('/logout', async (req, res) => {
  */
 authRouter.post('/register', async (req, res) => {
     const { name, email, password } = req.body;
+
+    // Check if email if valid
+    try {
+        const result = await verifyEmail(email);
+        if (!result.valid) {
+            return res.status(400).json({
+                error: 'Invalid email',
+                reason: result.reason,
+            });
+        }
+    } catch (err: unknown) {
+        const error = err as Error;
+        console.error('Email verification error:', error.message);
+        return res
+            .status(500)
+            .json({ error: 'Email verification service unavailable' });
+    }
 
     // Check if user already exists users table
     const { data: existingUser, error: checkError } = await supabase
