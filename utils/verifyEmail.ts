@@ -6,7 +6,7 @@ export async function verifyEmail(email: string) {
 
     try {
         const response = await fetch(
-            `https://emailreputation.abstractapi.com/v1/?api_key=${process.env.EMAIL_VERIF_API_KEY}&email=${encodeURIComponent(email)}`
+            `https://emailreputation.abstractapi.com/v1/?api_key=${process.env.EMAIL_VERIF_API_KEY}&email=${encodeURIComponent(email)}`,
         );
 
         if (!response.ok) {
@@ -15,14 +15,15 @@ export async function verifyEmail(email: string) {
 
         const data = await response.json();
         const isValidFormat = data.email_deliverability?.is_format_valid;
-        const isDeliverable = data.email_deliverability?.status === 'deliverable';
+        const isDeliverable =
+            data.email_deliverability?.status === 'deliverable';
 
         const isValid = Boolean(isValidFormat && isDeliverable);
 
         return {
             valid: isValid,
             details: data,
-            reason: isValid ? null : 'Invalid format or undeliverable'
+            reason: isValid ? null : 'Invalid format or undeliverable',
         };
     } catch (err: unknown) {
         const error = err as Error;

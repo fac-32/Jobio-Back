@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import {verifyEmail} from '../../utils/verifyEmail.js';
+import { verifyEmail } from '../../utils/verifyEmail.js';
 
 export const emailVerificationRouter = Router();
 
@@ -24,6 +24,8 @@ emailVerificationRouter.post('/verify', async (req, res) => {
     } catch (error: unknown) {
         const err = error as Error;
         console.error('Email verification error:', err.message);
-        return res.status(500).json({ error: 'Email verification service unavailable' });
+        return res
+            .status(500)
+            .json({ error: 'Email verification service unavailable' });
     }
 });
