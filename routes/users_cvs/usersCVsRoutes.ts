@@ -90,14 +90,13 @@ usersCVsRouter.post(
         console.log(`File Type: ${req.file.mimetype}, Size: ${req.file.size}`);
 
         // Get ID securely from the token (populated by authMiddleware)
-        const user = req.user;
-        // const { user_id } = req.body;
-        if (!user || !user.id) {
+        const { user_id } = req.body;
+        if (!user_id) {
             return res.status(400).json({ error: 'user_id is required' });
         }
 
         // Note: Supabase Auth IDs are UUID STRINGS (e.g. "a0eebc99-9c0b...")
-        const user_id = user.id;
+        // const user_id = user.id;
         console.log(`Processing for User ID: ${user_id}`);
 
         let cvText = null;
@@ -107,14 +106,14 @@ usersCVsRouter.post(
             cvText = await extractCvText(req.file);
             // DEBUG: Only show first 100 chars to prove it exists without flooding console
             console.log(`--- 2. Text Extracted (${cvText.length} chars) ---`);
-            console.log('Preview:', cvText.substring(0, 100) + '...');
+            // console.log('Preview:', cvText.substring(0, 100) + '...');
 
             // 3. AI Keyword Extraction
             console.log('--- 3. Calling AI Service ---');
             const keywordsArray = await extractKeywordsFromCv(cvText);
 
             console.log('--- 4. AI Result ---');
-            console.log('Keywords:', keywordsArray);
+            // console.log('Keywords:', keywordsArray);
 
             if (keywordsArray.length === 0) {
                 console.warn('⚠️ WARNING: AI returned 0 keywords.');
@@ -122,30 +121,23 @@ usersCVsRouter.post(
 
             // Convert array ["React", "CSS"] -> String "React, CSS" for DB storage
             // (Assuming your Supabase column is text. If it's text[], remove .join)
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             const cv_keywords = keywordsArray.join(', ');
+            console.log('Keywords String for DB:', cv_keywords);
 
-            // // const { user_id, cv_keywords } = req.body;
-            // // 4. Save to Supabase
-            // const { data, error } = await supabase
-            //     .from('users_cvs')
-            //     .insert([{ user_id, cv_keywords }])
-            //     .select();
+            // const { user_id, cv_keywords } = req.body;
+            // 4. Save to Supabase
+            const { data, error } = await supabase
+                .from('users_cvs')
+                .insert([{ user_id, cv_keywords }])
+                .select();
 
-            // if (error) throw error;
+            if (error) throw error;
 
-            // // 5. Response
-            // res.status(201).json({
-            //     message: 'CV processed successfully',
-            //     record: data[0],
-            //     // Sending the array back allows the Frontend to display tags immediately
-            //     generated_tags: keywordsArray,
-            // });
-
-            // We skip sending 'record' because we didn't save it,
-            // but we send 'generated_tags' so the UI still works.
-            res.status(200).json({
-                message: 'CV processed (DB Save Skipped)',
+            // 5. Response
+            res.status(201).json({
+                message: 'CV processed successfully',
+                record: data[0],
+                // Sending the array back allows the Frontend to display tags immediately
                 generated_tags: keywordsArray,
             });
         } catch (err) {
