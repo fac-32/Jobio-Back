@@ -1,0 +1,8 @@
+
+### Test valid email
+POST http://localhost:3000/email-verify/verify
+Content-Type: application/json
+Authorization: Bearer 
+{
+  "email": ""
+}
