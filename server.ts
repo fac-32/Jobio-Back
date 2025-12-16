@@ -6,6 +6,7 @@ import swaggerUi from 'swagger-ui-express';
 
 const app = express();
 
+// CORS configuration - allow requests from frontend server
 app.use(
     cors({
         origin: 'http://localhost:5173',
